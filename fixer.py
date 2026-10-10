@@ -15,6 +15,8 @@ Code:
 Error:
 {error}"""
     text = chat(prompt)
+    if text.startswith("AI error"):
+        return code
     match = re.search(r"```(?:python)?\n(.*?)```", text, re.DOTALL)
     return match.group(1) if match else text
 

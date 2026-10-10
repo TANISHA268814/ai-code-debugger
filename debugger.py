@@ -4,7 +4,7 @@ import sys
 from llm import chat
 
 def run_code(path):
-    env = {k: v for k, v in os.environ.items() if k != "HF_TOKEN"}
+    env = {k: v for k, v in os.environ.items() if k not in ("HF_TOKEN", "GROQ_API_KEY")}
     result = subprocess.run(
         [sys.executable, path],
         capture_output=True, text=True, timeout=30, env=env
