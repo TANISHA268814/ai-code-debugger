@@ -1,4 +1,5 @@
 # 🐞 AI Code Debugger
+🔗 **Live demo:**https://semicolonsaviour.streamlit.app/
 
 An AI-powered tool that finds errors in your Python code, explains them in simple words, and can fix them automatically. It runs on your own laptop using Ollama, so your code never leaves your computer.
 
