@@ -1,13 +1,13 @@
+import os
 import subprocess
 import sys
-import ollama
-
-MODEL = "qwen2.5-coder:3b"
+from llm import chat
 
 def run_code(path):
+    env = {k: v for k, v in os.environ.items() if k != "HF_TOKEN"}
     result = subprocess.run(
         [sys.executable, path],
-        capture_output=True, text=True, timeout=30
+        capture_output=True, text=True, timeout=30, env=env
     )
     return result.stderr
 
@@ -22,11 +22,7 @@ Error:
 
 1. Explain the error in simple words.
 2. Show the fixed code."""
-    response = ollama.chat(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response["message"]["content"]
+    return chat(prompt)
 
 if __name__ == "__main__":
     path = sys.argv[1]
@@ -39,4 +35,3 @@ if __name__ == "__main__":
     else:
         print("Error found, asking AI...\n")
         print(ask_ai(code, error))
-        

@@ -1,10 +1,9 @@
 import re
 import sys
 import shutil
-import ollama
+from llm import chat
 from debugger import run_code
 
-MODEL = "qwen2.5-coder:3b"
 MAX_TRIES = 3
 
 def get_fixed_code(code, error):
@@ -15,17 +14,13 @@ Code:
 
 Error:
 {error}"""
-    response = ollama.chat(
-        model=MODEL,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    text = response["message"]["content"]
+    text = chat(prompt)
     match = re.search(r"```(?:python)?\n(.*?)```", text, re.DOTALL)
     return match.group(1) if match else text
 
 if __name__ == "__main__":
     path = sys.argv[1]
-    shutil.copy(path, path + ".bak")  # backup of your original file
+    shutil.copy(path, path + ".bak")
 
     with open(path) as f:
         code = f.read()
